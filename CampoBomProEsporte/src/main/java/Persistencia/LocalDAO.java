@@ -20,14 +20,14 @@ public class LocalDAO {
 		// Salvar
 		public Local salvar(Local l) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO local VALUES(?,?,?,null,?,?";
+			String sqlInsert = "INSERT INTO local VALUES(?,?,?,null,?,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setDouble(1, l.getLatitude());
 				statement.setString(2, l.getDescricao());
 				statement.setString(3, l.getImagem());
-				statement.setDouble(1, l.getLongitude());
-				statement.setLong(1, l.getUsuario().getId());
+				statement.setDouble(4, l.getLongitude());
+				statement.setLong(5, l.getUsuario().getId());
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
 				if(rs.next()) {
@@ -44,13 +44,13 @@ public class LocalDAO {
 		
 		public Local editar(Local l) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE local SET longitude=?, descricao=?, imagem=?, latitute=?, id_usuario=? WHERE id_local=?";
+			String sqlUpdate = "UPDATE local SET lagitude=?, descricao=?, imagem=?, longitude=?, id_usuario=? WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
-				statement.setDouble(1, l.getLongitude());
+				statement.setDouble(4, l.getLongitude());
 				statement.setString(2, l.getDescricao());
 				statement.setString(3, l.getImagem());
-				statement.setDouble(4, l.getLatitude());
+				statement.setDouble(1, l.getLatitude());
 				statement.setLong(5, l.getUsuario().getId());
 				statement.setLong(6, l.getId());
 				/*int linhasAfetadas = */statement.executeUpdate();
@@ -128,7 +128,7 @@ public class LocalDAO {
 					l.setDescricao(rs.getString("descricao"));
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
-					l.setLatitude(rs.getDouble("latitude"));
+					l.setLatitude(rs.getDouble("lagitude"));
 					
 				}
 			} catch (SQLException e) {
@@ -154,7 +154,7 @@ public class LocalDAO {
 					l.setDescricao(rs.getString("descricao"));
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
-					l.setLatitude(rs.getDouble("latitude"));
+					l.setLatitude(rs.getDouble("lagitude"));
 					al.add(l);
 				}
 			} catch (SQLException e) {

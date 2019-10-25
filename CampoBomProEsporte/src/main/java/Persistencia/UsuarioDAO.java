@@ -17,16 +17,17 @@ public class UsuarioDAO {
 		// Salvar
 		public Usuario salvar(Usuario usuario) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO usuario VALUES(?,?,null,?";
+			String sqlInsert = "INSERT INTO usuario VALUES(?,?,null,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setString(1, usuario.getSenha());
 				statement.setString(2, usuario.getNome());
 				statement.setString(3, usuario.getEmail());
-				ResultSet rs = statement.getGeneratedKeys();
+				
 				statement.executeUpdate();
+				ResultSet rs = statement.getGeneratedKeys();
 				if(rs.next()) {
-					int id = rs.getInt(1);
+					long id = rs.getLong(1);
 					usuario.setId(id);
 				}
 			} catch (SQLException e) {

@@ -22,13 +22,13 @@ public class EsporteDAO {
 		// Salvar
 		public Esporte salvar(Esporte es) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO esportes VALUES(null,?,?,?";
+			String sqlInsert = "INSERT INTO esportes VALUES(null,?,?,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setString(1, es.getDescricao());
 				statement.setLong(2, es.getPin().getId());
-				statement.executeUpdate();
 				statement.setLong(3, es.getUsuario().getId());
+				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
 				if(rs.next()) {
 					int id = rs.getInt(1);
@@ -44,12 +44,13 @@ public class EsporteDAO {
 		
 		public Esporte editar(Esporte es) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE esportes SET descricao=?, id_usuario=?, id_pin=? WHERE id_usuario=?";
+			String sqlUpdate = "UPDATE esportes SET descricao=?, id_usuario=?, id_pin=? WHERE id_esportes=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setString(1, es.getDescricao());
 				statement.setLong(2, es.getUsuario().getId());
 				statement.setLong(3, es.getPin().getId());
+				statement.setLong(4, es.getId());
 				/*int linhasAfetadas =*/ statement.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -112,7 +113,7 @@ public class EsporteDAO {
 	}
 		public Esporte buscarPorId(long id) {
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM esportes WHERE id_esporte=?";
+			String sqlBuscarPorId = "SELECT * FROM esportes WHERE id_esportes=?";
 			Esporte es = null;
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);

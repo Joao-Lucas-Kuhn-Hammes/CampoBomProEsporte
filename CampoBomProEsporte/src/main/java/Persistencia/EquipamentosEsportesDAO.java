@@ -12,8 +12,8 @@ import com.mysql.jdbc.PreparedStatement;
 public class EquipamentosEsportesDAO {
 		
 		private ConexaoMysql conexao;
-		private UsuarioDAO usuDAO = new UsuarioDAO();
-		private PinDAO pinDAO = new PinDAO();
+		private EquipamentosDAO equiDAO = new EquipamentosDAO();
+		private EsporteDAO esporteDAO = new EsporteDAO();
 		
 		public EquipamentosEsportesDAO() {
 			super();
@@ -22,7 +22,7 @@ public class EquipamentosEsportesDAO {
 		// Salvar
 		public boolean salvar(Equipamento equip, Esporte esporte) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO equipamentos_esportes VALUES(?,?,null";
+			String sqlInsert = "INSERT INTO equipamentos_esportes VALUES(?,?,null)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setLong(2, equip.getId());
@@ -61,19 +61,14 @@ public class EquipamentosEsportesDAO {
 		public ArrayList<Esporte> buscarPorEquipamento(Equipamento equip) {
 			ArrayList<Esporte> al = new ArrayList<>();
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM equipamentos_esportes WHERE id_equipamentos =?";
-			Esporte esporte = null;
+			String sqlBuscarPorId = "SELECT id_esportes FROM equipamentos_esportes WHERE id_equipamentos =?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
 				statement.setLong(1, equip.getId());
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 				while(rs.next()) {
-					esporte = new Esporte();
-					esporte.setDescricao(rs.getString("descricao"));
-					esporte.setId(rs.getLong("id_esportes"));
-					esporte.setPin(pinDAO.buscarPorId(rs.getLong("id_pin")));
-					esporte.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
+					al.add(esporteDAO.buscarPorId(rs.getLong("id_esportes")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -86,20 +81,14 @@ public class EquipamentosEsportesDAO {
 		public ArrayList<Equipamento> buscarPorEsporte(Esporte esporte) {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM equipamentos_esportes WHERE id_esportes =?";
-			Equipamento equip = null;
+			String sqlBuscarPorId = "SELECT id_equipamentos FROM equipamentos_esportes WHERE id_esportes =?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
 				statement.setLong(1, esporte.getId());
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 				while(rs.next()) {
-					equip = new Equipamento();
-					equip.setId(rs.getLong("id_equipamentos"));
-					equip.setDescricao(rs.getString("descricao"));
-					equip.setImagem(rs.getString("imagem"));
-					equip.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					al.add(equip);
+					al.add(equiDAO.buscarPorId(rs.getLong("id_equipamentos")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

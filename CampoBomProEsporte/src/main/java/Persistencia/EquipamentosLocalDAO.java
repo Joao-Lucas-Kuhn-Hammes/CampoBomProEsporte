@@ -12,7 +12,8 @@ import com.mysql.jdbc.PreparedStatement;
 public class EquipamentosLocalDAO {
 		
 		private ConexaoMysql conexao;
-		private UsuarioDAO usuDAO = new UsuarioDAO();
+		private EquipamentosDAO equipDAO = new EquipamentosDAO();
+		private LocalDAO localDAO = new LocalDAO();
 		
 		public EquipamentosLocalDAO() {
 			super();
@@ -21,7 +22,7 @@ public class EquipamentosLocalDAO {
 		// Salvar
 		public boolean salvar(Equipamento equip, Local local) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO equipamentos_local VALUES(?,?,null";
+			String sqlInsert = "INSERT INTO equipamentos_local VALUES(?,?,null)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setLong(2, equip.getId());
@@ -60,22 +61,14 @@ public class EquipamentosLocalDAO {
 		public ArrayList<Local> buscarPorEquipamento(Equipamento equip) {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM equipamentos_local WHERE id_equipamentos =?";
-			Local local = null;
+			String sqlBuscarPorId = "SELECT id_local FROM equipamentos_local WHERE id_equipamentos =?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
 				statement.setLong(1, equip.getId());
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 				while(rs.next()) {
-					local = new Local();
-					local.setId(rs.getLong("id_local"));
-					local.setDescricao(rs.getString("descricao"));
-					local.setImagem(rs.getString("imagem"));
-					local.setLongitude(rs.getDouble("longitude"));
-					local.setLatitude(rs.getDouble("latitude"));
-					local.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					al.add(local);
+					al.add(localDAO.buscarPorId(rs.getLong("id_local")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -88,20 +81,14 @@ public class EquipamentosLocalDAO {
 		public ArrayList<Equipamento> buscarPorLocal(Local local) {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM equipamentos_local WHERE id_local =?";
-			Equipamento equip = null;
+			String sqlBuscarPorId = "SELECT id_equipamentos FROM equipamentos_local WHERE id_local =?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
 				statement.setLong(1, local.getId());
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 				while(rs.next()) {
-					equip = new Equipamento();
-					equip.setId(rs.getLong("id_equipamentos"));
-					equip.setDescricao(rs.getString("descricao"));
-					equip.setImagem(rs.getString("imagem"));
-					equip.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					al.add(equip);
+					al.add(equipDAO.buscarPorId(rs.getLong("id_equipamentos")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -29,7 +29,7 @@ import Persistencia.UsuarioDAO;
 		return usuDAO.buscarPorId(id);
 	}
 	
-	@GetMapping("{login}/{senha}")
+	@GetMapping("{email}/{senha}")
 	public Usuario login(@PathVariable(name = "email") String email, @PathVariable(name = "senha") String senha) {
 		return usuDAO.buscarLogin(email, senha);
 	}
@@ -44,7 +44,7 @@ import Persistencia.UsuarioDAO;
 		return ResponseEntity.ok(usuDAO.editar(novo));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<Boolean> deletar(@PathVariable Long id) {
 		return ResponseEntity.ok(usuDAO.excluir(id));
 	}

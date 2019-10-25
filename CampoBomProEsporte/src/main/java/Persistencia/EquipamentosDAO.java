@@ -21,7 +21,7 @@ public class EquipamentosDAO {
 		// Salvar
 		public Equipamento salvar(Equipamento eq) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO equipamentos VALUES(null,?,?,?";
+			String sqlInsert = "INSERT INTO equipamentos VALUES(null,?,?,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setString(1, eq.getImagem());
@@ -49,6 +49,7 @@ public class EquipamentosDAO {
 				statement.setString(1, eq.getDescricao());
 				statement.setString(2, eq.getImagem());
 				statement.setLong(3, eq.getUsuario().getId());
+				statement.setLong(4, eq.getId());
 				/*int linhasAfetadas = */statement.executeUpdate();
 				
 			} catch (SQLException e) {
