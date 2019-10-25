@@ -61,13 +61,13 @@ public class EsporteDAO {
 		}
 	//	
 	//	
-		public boolean excluir(int id) {
+		public boolean excluir(long id) {
 			
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM equipamentos_esportes WHERE id_esportes=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;
@@ -82,7 +82,7 @@ public class EsporteDAO {
 			sqlExcluir = "DELETE FROM local_esportes WHERE id_esportes=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;
@@ -97,7 +97,7 @@ public class EsporteDAO {
 			sqlExcluir = "DELETE FROM esportes WHERE id_esportes=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;

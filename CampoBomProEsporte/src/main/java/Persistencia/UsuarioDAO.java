@@ -57,12 +57,12 @@ public class UsuarioDAO {
 		}
 	//	
 	//	
-		public boolean excluir(int id) {
+		public boolean excluir(long id) {
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM usuario WHERE id_usuario=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;
@@ -91,6 +91,34 @@ public class UsuarioDAO {
 					usuario.setId(rs.getLong("id_usuario"));
 					usuario.setEmail(rs.getString("email"));
 					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				this.conexao.fecharConexao();
+			}		
+			return usuario;
+		}
+		
+		public Usuario buscarLogin(String login, String senha) {
+			this.conexao.abrirConexao();
+			String sqlBuscarPorId = "SELECT * FROM usuario WHERE email=? and senha=?";
+			Usuario usuario = null;
+			try {
+				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
+				statement.setString(1, login);
+				statement.setString(2, senha);
+				ResultSet rs = statement.executeQuery();
+				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
+				if(rs.next()) {
+					usuario = new Usuario();
+					usuario.setSenha(rs.getString("senha"));
+					usuario.setNome(rs.getString("nome"));
+					usuario.setId(rs.getLong("id_usuario"));
+					usuario.setEmail(rs.getString("email"));
+					
+				}else {
+					return new Usuario();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

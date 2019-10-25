@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import Models.Equipamento;
 import Models.Esporte;
-import Models.Local;
 import com.mysql.jdbc.PreparedStatement;
 
 
@@ -84,14 +83,14 @@ public class EquipamentosEsportesDAO {
 			return al;
 		}
 		
-		public ArrayList<Equipamento> buscarPorLocal(Local local) {
+		public ArrayList<Equipamento> buscarPorEsporte(Esporte esporte) {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM equipamentos_local WHERE id_local =?";
+			String sqlBuscarPorId = "SELECT * FROM equipamentos_esportes WHERE id_esportes =?";
 			Equipamento equip = null;
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
-				statement.setLong(1, local.getId());
+				statement.setLong(1, esporte.getId());
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 				while(rs.next()) {

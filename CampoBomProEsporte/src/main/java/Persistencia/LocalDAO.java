@@ -64,13 +64,13 @@ public class LocalDAO {
 		}
 	//	
 	//	
-		public boolean excluir(int id) {
+		public boolean excluir(long id) {
 			
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM equipamentos_local WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;
@@ -85,7 +85,7 @@ public class LocalDAO {
 			sqlExcluir = "DELETE FROM local_esportes WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;
@@ -100,7 +100,7 @@ public class LocalDAO {
 			sqlExcluir = "DELETE FROM local WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setInt(1, id);
+				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;
