@@ -128,5 +128,26 @@ public class UsuarioDAO {
 			}		
 			return usuario;
 		}
+		
+		public boolean buscarPorEmail(String email) {
+			this.conexao.abrirConexao();
+			String sqlBuscarPorId = "SELECT * FROM usuario WHERE email=?";
+			try {
+				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
+				statement.setString(1, email);
+				ResultSet rs = statement.executeQuery();
+				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
+				if(rs.next()) {
+					return true;
+				}else {
+					return false;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				this.conexao.fecharConexao();
+			}		
+			return false;
+		}
 }
 

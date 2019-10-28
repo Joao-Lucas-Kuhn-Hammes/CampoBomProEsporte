@@ -29,6 +29,11 @@ import Persistencia.UsuarioDAO;
 		return usuDAO.buscarPorId(id);
 	}
 	
+	@GetMapping("email/{email}")
+	public boolean getEmail(@PathVariable(name = "email") String email) {
+		return usuDAO.buscarPorEmail(email);
+	}
+	
 	@GetMapping("{email}/{senha}")
 	public Usuario login(@PathVariable(name = "email") String email, @PathVariable(name = "senha") String senha) {
 		return usuDAO.buscarLogin(email, senha);
@@ -36,7 +41,13 @@ import Persistencia.UsuarioDAO;
 	
 	@PostMapping
 	public ResponseEntity<Usuario> setUsuario(@RequestBody Usuario novo) {
-		return ResponseEntity.ok(usuDAO.salvar(novo));
+		if(!usuDAO.buscarPorEmail(novo.getEmail())) {
+			return ResponseEntity.ok(usuDAO.salvar(novo));
+		}else {
+			return ResponseEntity.ok(new Usuario());
+		}
+		
+		
 	}
 	
 	@PutMapping()
