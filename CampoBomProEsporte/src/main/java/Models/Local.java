@@ -8,7 +8,6 @@ public class Local {
 	private long id;
 	private Double longitude;
 	private Double latitude;
-	private String imagem;
 	private String descricao;
 	private Usuario usuario;
 	
@@ -32,12 +31,6 @@ public class Local {
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
-	public String getImagem() {
-		return imagem;
-	}
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
-	}
 	public String getDescricao() {
 		return descricao;
 	}
@@ -57,12 +50,11 @@ public class Local {
 	public Local() {
 		super();
 	}
-	public Local(long id, Double longitude, Double latitude, String imagem, String descricao, Usuario usuario) {
+	public Local(long id, Double longitude, Double latitude, String descricao, Usuario usuario) {
 		super();
 		this.id = id;
 		this.longitude = longitude;
 		this.latitude = latitude;
-		this.imagem = imagem;
 		this.descricao = descricao;
 		this.usuario = usuario;
 	}

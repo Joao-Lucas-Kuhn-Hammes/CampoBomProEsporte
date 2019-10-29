@@ -21,12 +21,11 @@ public class EquipamentosDAO {
 		// Salvar
 		public Equipamento salvar(Equipamento eq) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO equipamentos VALUES(null,?,?,?)";
+			String sqlInsert = "INSERT INTO equipamentos VALUES(null,?,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
-				statement.setString(1, eq.getImagem());
-				statement.setString(2, eq.getDescricao());
-				statement.setLong(3, eq.getUsuario().getId());
+				statement.setString(1, eq.getDescricao());
+				statement.setLong(2, eq.getUsuario().getId());
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
 				if(rs.next()) {
@@ -43,13 +42,12 @@ public class EquipamentosDAO {
 		
 		public Equipamento editar(Equipamento eq) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE equipamentos SET descricao=?, imagem=?, id_usuario=? WHERE id_equipamentos=?";
+			String sqlUpdate = "UPDATE equipamentos SET descricao=?, id_usuario=? WHERE id_equipamentos=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setString(1, eq.getDescricao());
-				statement.setString(2, eq.getImagem());
-				statement.setLong(3, eq.getUsuario().getId());
-				statement.setLong(4, eq.getId());
+				statement.setLong(2, eq.getUsuario().getId());
+				statement.setLong(3, eq.getId());
 				/*int linhasAfetadas = */statement.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -124,7 +122,6 @@ public class EquipamentosDAO {
 					eq.setId(rs.getLong("id_equipamentos"));
 					eq.setDescricao(rs.getString("descricao"));
 					eq.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					eq.setImagem(rs.getString("imagem"));
 					
 				}
 			} catch (SQLException e) {
@@ -149,7 +146,6 @@ public class EquipamentosDAO {
 					eq.setId(rs.getLong("id_equipamentos"));
 					eq.setDescricao(rs.getString("descricao"));
 					eq.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					eq.setImagem(rs.getString("imagem"));
 					al.add(eq);
 				}
 			} catch (SQLException e) {

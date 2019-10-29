@@ -12,7 +12,6 @@ public class EsporteDAO {
 		 
 		private ConexaoMysql conexao;
 		private UsuarioDAO usuDAO = new UsuarioDAO();
-		private PinDAO pinDAO = new PinDAO();
 		
 		
 		public EsporteDAO() {
@@ -22,12 +21,13 @@ public class EsporteDAO {
 		// Salvar
 		public Esporte salvar(Esporte es) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO esportes VALUES(null,?,?,?)";
+			String sqlInsert = "INSERT INTO esportes VALUES(null,?,?,?,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setString(1, es.getDescricao());
-				statement.setLong(2, es.getPin().getId());
+				statement.setLong(2, es.getPin());
 				statement.setLong(3, es.getUsuario().getId());
+				statement.setString(4, es.getNome());
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
 				if(rs.next()) {
@@ -44,13 +44,14 @@ public class EsporteDAO {
 		
 		public Esporte editar(Esporte es) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE esportes SET descricao=?, id_usuario=?, id_pin=? WHERE id_esportes=?";
+			String sqlUpdate = "UPDATE esportes SET descricao=?, id_usuario=?, id_pin=?, nome=? WHERE id_esportes=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setString(1, es.getDescricao());
 				statement.setLong(2, es.getUsuario().getId());
-				statement.setLong(3, es.getPin().getId());
-				statement.setLong(4, es.getId());
+				statement.setLong(3, es.getPin());
+				statement.setString(4, es.getNome());
+				statement.setLong(5, es.getId());
 				/*int linhasAfetadas =*/ statement.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -125,7 +126,7 @@ public class EsporteDAO {
 					es.setId(rs.getLong("id_esportes"));
 					es.setDescricao(rs.getString("descricao"));
 					es.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					es.setPin(pinDAO.buscarPorId(rs.getLong("id_pin")));
+					es.setPin(rs.getLong("id_pin"));
 					
 				}
 			} catch (SQLException e) {
@@ -150,7 +151,7 @@ public class EsporteDAO {
 					es.setId(rs.getLong("id_esportes"));
 					es.setDescricao(rs.getString("descricao"));
 					es.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					es.setPin(pinDAO.buscarPorId(rs.getLong("id_pin")));
+					es.setPin(rs.getLong("id_pin"));
 					al.add(es);
 				}
 			} catch (SQLException e) {

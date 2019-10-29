@@ -33,7 +33,7 @@ import Persistencia.UsuarioDAO;
 	public boolean getEmail(@PathVariable(name = "email") String email) {
 		return usuDAO.buscarPorEmail(email);
 	}
-	
+		
 	@GetMapping("{email}/{senha}")
 	public Usuario login(@PathVariable(name = "email") String email, @PathVariable(name = "senha") String senha) {
 		return usuDAO.buscarLogin(email, senha);
