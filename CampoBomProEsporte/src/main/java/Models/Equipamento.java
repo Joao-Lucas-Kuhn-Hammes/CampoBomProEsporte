@@ -8,6 +8,7 @@ public class Equipamento {
 	private long id;
 	private Usuario usuario;
 	private String descricao;
+	private String nome;
 	
 	//getters n setters
 	
@@ -30,13 +31,22 @@ public class Equipamento {
 		this.descricao = descricao;
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	
 	//contrutores;
 	
-	public Equipamento(long id, Usuario usuario, String descricao) {
+	public Equipamento(long id, Usuario usuario, String descricao, String nome) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
 		this.descricao = descricao;
+		this.nome = nome;
 	}
 	public Equipamento() {
 		super();
