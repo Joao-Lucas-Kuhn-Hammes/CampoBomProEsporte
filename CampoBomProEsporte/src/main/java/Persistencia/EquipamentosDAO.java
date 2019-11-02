@@ -131,6 +131,31 @@ public class EquipamentosDAO {
 			}		
 			return eq;
 		}
+		public ArrayList<Equipamento> buscarTodosUsuario(Long id) {
+			ArrayList<Equipamento> al = new ArrayList<>();
+			this.conexao.abrirConexao();
+			String sqlBuscarPorId = "SELECT * FROM equipamentos WHERE id_usuario=?";
+			Equipamento eq = null;
+			try {
+				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
+				statement.setLong(1, id);
+				ResultSet rs = statement.executeQuery();
+				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
+	 			while(rs.next()) {
+					eq = new Equipamento();
+					eq.setId(rs.getLong("id_equipamentos"));
+					eq.setDescricao(rs.getString("descricao"));
+					eq.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
+					al.add(eq);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				this.conexao.fecharConexao();
+			}		
+			return al;
+		}
+		
 		public ArrayList<Equipamento> buscarTodos() {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();

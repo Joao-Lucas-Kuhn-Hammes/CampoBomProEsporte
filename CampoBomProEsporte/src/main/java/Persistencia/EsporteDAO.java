@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Models.Esporte;
+import Models.Usuario;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -144,6 +145,32 @@ public class EsporteDAO {
 			Esporte es = null;
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
+				ResultSet rs = statement.executeQuery();
+				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
+	 			while(rs.next()) {
+					es = new Esporte();
+					es.setId(rs.getLong("id_esportes"));
+					es.setDescricao(rs.getString("descricao"));
+					es.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
+					es.setPin(rs.getLong("id_pin"));
+					al.add(es);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				this.conexao.fecharConexao();
+			}		
+			return al;
+		}
+		
+		public ArrayList<Esporte> buscarTodosUsuario(Long id) {
+			this.conexao.abrirConexao();
+			ArrayList<Esporte> al = new ArrayList<>();
+			String sqlBuscarPorId = "SELECT * FROM esportes WHERE id_usuario =?";
+			Esporte es = null;
+			try {
+				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
+				statement.setLong(1, id);
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 	 			while(rs.next()) {

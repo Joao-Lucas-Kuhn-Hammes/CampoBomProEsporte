@@ -33,6 +33,11 @@ public class EsportesControllers {
 		return esporteDAO.buscarTodos();
 	}
 	
+	@GetMapping("usuario/{id}")
+	public ArrayList<Esporte> getEsporteTodosUsuario(@PathVariable(name = "id") Long id) {
+		return esporteDAO.buscarTodosUsuario(id);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Esporte> setEsporte(@RequestBody Esporte novo) {
 		return ResponseEntity.ok(esporteDAO.salvar(novo));

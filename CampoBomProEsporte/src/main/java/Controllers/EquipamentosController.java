@@ -33,6 +33,11 @@ public class EquipamentosController {
 		return equipDAO.buscarTodos();
 	}
 	
+	@GetMapping("usuario/{id}")
+	public ArrayList<Equipamento> getEquipamentoTodosUsuario(@PathVariable(name = "id") Long id) {
+		return equipDAO.buscarTodosUsuario(id);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Equipamento> setEquipamentos(@RequestBody Equipamento novo) {
 		return ResponseEntity.ok(equipDAO.salvar(novo));
