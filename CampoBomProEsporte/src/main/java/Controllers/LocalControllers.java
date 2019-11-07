@@ -33,6 +33,11 @@ public class LocalControllers {
 		return localDAO.buscarTodos();
 	}
 	
+	@GetMapping("usuario/{id}")
+	public ArrayList<Local> getLocalTodosUsuario(@PathVariable(name = "id") Long id) {
+		return localDAO.buscarTodosUsuario(id);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Local> setEsporte(@RequestBody Local novo) {
 		return ResponseEntity.ok(localDAO.salvar(novo));

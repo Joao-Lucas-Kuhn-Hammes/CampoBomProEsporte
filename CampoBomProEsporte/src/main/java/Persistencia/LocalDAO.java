@@ -169,14 +169,14 @@ public class LocalDAO {
 			return al;
 		}
 		
-		public ArrayList<Local> buscarTodosUsuario(Usuario usu) {
+		public ArrayList<Local> buscarTodosUsuario(Long id) {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM local id_usuario";
 			Local l = null;
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
-				statement.setLong(1, usu.getId());
+				statement.setLong(1, id);
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 	 			while(rs.next()) {
