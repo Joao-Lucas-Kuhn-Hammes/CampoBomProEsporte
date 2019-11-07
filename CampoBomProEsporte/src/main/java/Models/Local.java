@@ -10,6 +10,7 @@ public class Local {
 	private Double latitude;
 	private String descricao;
 	private Usuario usuario;
+	private String endereco;
 	
 	//getters n setters
 	
@@ -40,6 +41,14 @@ public class Local {
 	public Usuario getUsuario() {
 		return usuario;
 	}
+	
+	
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereço) {
+		this.endereco = endereço;
+	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
@@ -50,13 +59,14 @@ public class Local {
 	public Local() {
 		super();
 	}
-	public Local(long id, Double longitude, Double latitude, String descricao, Usuario usuario) {
+	public Local(long id, Double longitude, Double latitude, String descricao, Usuario usuario, String endereco) {
 		super();
 		this.id = id;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.descricao = descricao;
 		this.usuario = usuario;
+		this.endereco = endereco;
 	}
 	
 	//metodos

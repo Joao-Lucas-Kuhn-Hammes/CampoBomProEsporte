@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Models.Local;
+import Models.Usuario;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -20,13 +21,16 @@ public class LocalDAO {
 		// Salvar
 		public Local salvar(Local l) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO local VALUES(?,?,null,?,?)";
+			String sqlInsert = "INSERT INTO local VALUES(?,?,null,?,?,?,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setDouble(1, l.getLatitude());
 				statement.setString(2, l.getDescricao());
-				statement.setDouble(4, l.getLongitude());
+				statement.setDouble(3, l.getLongitude());
+				statement.setString(4, l.getDescricao());
 				statement.setLong(5, l.getUsuario().getId());
+				statement.setString(6, l.getNome());
+
 				statement.executeUpdate();
 				ResultSet rs = statement.getGeneratedKeys();
 				if(rs.next()) {
@@ -43,14 +47,16 @@ public class LocalDAO {
 		
 		public Local editar(Local l) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE local SET lagitude=?, descricao=?, longitude=?, id_usuario=? WHERE id_local=?";
+			String sqlUpdate = "UPDATE local SET lagitude=?, descricao=?, longitude=?, id_usuario=?, endereço=?,nome=? WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setDouble(3, l.getLongitude());
 				statement.setString(2, l.getDescricao());
 				statement.setDouble(1, l.getLatitude());
 				statement.setLong(4, l.getUsuario().getId());
-				statement.setLong(5, l.getId());
+				statement.setString(5, l.getEndereco());
+				statement.setString(6, l.getNome());
+				statement.setLong(7, l.getId());
 				/*int linhasAfetadas = */statement.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -144,6 +150,33 @@ public class LocalDAO {
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
 
+				ResultSet rs = statement.executeQuery();
+				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
+	 			while(rs.next()) {
+					l = new Local();
+					l.setId(rs.getLong("id_local"));
+					l.setDescricao(rs.getString("descricao"));
+					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
+					l.setLongitude(rs.getDouble("longitude"));
+					l.setLatitude(rs.getDouble("lagitude"));
+					al.add(l);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				this.conexao.fecharConexao();
+			}		
+			return al;
+		}
+		
+		public ArrayList<Local> buscarTodosUsuario(Usuario usu) {
+			ArrayList<Local> al = new ArrayList<>();
+			this.conexao.abrirConexao();
+			String sqlBuscarPorId = "SELECT * FROM local id_usuario";
+			Local l = null;
+			try {
+				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
+				statement.setLong(1, usu.getId());
 				ResultSet rs = statement.executeQuery();
 				// CONVERTER O RESULTSET EM UM OBJETO USUARIO
 	 			while(rs.next()) {
