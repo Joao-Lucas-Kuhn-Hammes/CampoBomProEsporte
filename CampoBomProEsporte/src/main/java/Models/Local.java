@@ -11,6 +11,7 @@ public class Local {
 	private String descricao;
 	private Usuario usuario;
 	private String endereco;
+	private String nome;
 	
 	//getters n setters
 	
@@ -53,6 +54,13 @@ public class Local {
 		this.usuario = usuario;
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
 	//construtores
 	
 
@@ -68,7 +76,7 @@ public class Local {
 		this.usuario = usuario;
 		this.endereco = endereco;
 	}
-	
+
 	//metodos
 	
 	
