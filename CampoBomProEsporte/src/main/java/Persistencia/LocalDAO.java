@@ -9,7 +9,7 @@ import Models.Usuario;
 import com.mysql.jdbc.PreparedStatement;
 
 public class LocalDAO {
-		 
+		
 		private ConexaoMysql conexao;
 		private UsuarioDAO usuDAO = new UsuarioDAO();
 		
@@ -27,7 +27,7 @@ public class LocalDAO {
 				statement.setDouble(1, l.getLatitude());
 				statement.setString(2, l.getDescricao());
 				statement.setDouble(3, l.getLongitude());
-				statement.setString(4, l.getDescricao());
+				statement.setString(4, l.getEndereco());
 				statement.setLong(5, l.getUsuario().getId());
 				statement.setString(6, l.getNome());
 
@@ -47,7 +47,7 @@ public class LocalDAO {
 		
 		public Local editar(Local l) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE local SET lagitude=?, descricao=?, longitude=?, id_usuario=?, endereço=?,nome=? WHERE id_local=?";
+			String sqlUpdate = "UPDATE local SET latitude=?, descricao=?, longitude=?, id_usuario=?, endereço=?,nome=? WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setDouble(3, l.getLongitude());

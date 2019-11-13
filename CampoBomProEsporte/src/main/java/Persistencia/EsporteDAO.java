@@ -26,7 +26,7 @@ public class EsporteDAO {
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
 				statement.setString(1, es.getDescricao());
-				statement.setLong(2, es.getPin());
+				statement.setLong(2, 0);
 				statement.setLong(3, es.getUsuario().getId());
 				statement.setString(4, es.getNome());
 				statement.executeUpdate();
@@ -50,7 +50,7 @@ public class EsporteDAO {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setString(1, es.getDescricao());
 				statement.setLong(2, es.getUsuario().getId());
-				statement.setLong(3, es.getPin());
+				statement.setLong(3, 0);
 				statement.setString(4, es.getNome());
 				statement.setLong(5, es.getId());
 				/*int linhasAfetadas =*/ statement.executeUpdate();
