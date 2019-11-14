@@ -111,7 +111,8 @@ public class EquipamentosDAO {
 					eq.setId(rs.getLong("id_equipamentos"));
 					eq.setDescricao(rs.getString("descricao"));
 					eq.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
-					
+					eq.setDescricao(rs.getString("nome"));
+
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -134,6 +135,7 @@ public class EquipamentosDAO {
 					eq = new Equipamento();
 					eq.setId(rs.getLong("id_equipamentos"));
 					eq.setDescricao(rs.getString("descricao"));
+					eq.setDescricao(rs.getString("nome"));
 					eq.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					al.add(eq);
 				}
@@ -158,6 +160,7 @@ public class EquipamentosDAO {
 	 			while(rs.next()) {
 					eq = new Equipamento();
 					eq.setId(rs.getLong("id_equipamentos"));
+					eq.setDescricao(rs.getString("nome"));
 					eq.setDescricao(rs.getString("descricao"));
 					eq.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					al.add(eq);

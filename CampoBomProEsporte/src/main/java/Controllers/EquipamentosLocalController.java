@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Models.Equipamento;
+import Models.EquipamentosLocal;
 import Models.Local;
 import Persistencia.EquipamentosLocalDAO;
 @CrossOrigin
@@ -33,12 +34,12 @@ public class EquipamentosLocalController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Boolean> setEquipamentoslocal(@RequestBody Local local, Equipamento equip) {
-		return ResponseEntity.ok(elDAO.salvar(equip, local));
+	public ResponseEntity<Boolean> setEquipamentoslocal(@RequestBody EquipamentosLocal el) {
+		return ResponseEntity.ok(elDAO.salvar(el));
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<Boolean> excluir(@RequestBody Local local, Equipamento equip) {
-		return ResponseEntity.ok(elDAO.excluir(equip, local));
+	public ResponseEntity<Boolean> excluir(@RequestBody EquipamentosLocal el) {
+		return ResponseEntity.ok(elDAO.excluir(el));
 	}
 }

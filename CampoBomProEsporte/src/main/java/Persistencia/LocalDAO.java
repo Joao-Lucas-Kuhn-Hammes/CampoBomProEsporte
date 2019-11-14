@@ -47,7 +47,7 @@ public class LocalDAO {
 		
 		public Local editar(Local l) {
 			this.conexao.abrirConexao();
-			String sqlUpdate = "UPDATE local SET latitude=?, descricao=?, longitude=?, id_usuario=?, endereço=?,nome=? WHERE id_local=?";
+			String sqlUpdate = "UPDATE local SET latitude=?,descricao=?, longitude=?, id_usuario=?, endereço=?,nome=? WHERE id_local=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlUpdate);
 				statement.setDouble(3, l.getLongitude());
@@ -133,6 +133,8 @@ public class LocalDAO {
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
 					l.setLatitude(rs.getDouble("latitude"));
+					l.setNome(rs.getString("nome"));
+					l.setEndereco(rs.getString("endereço"));
 					
 				}
 			} catch (SQLException e) {
@@ -159,6 +161,8 @@ public class LocalDAO {
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
 					l.setLatitude(rs.getDouble("latitude"));
+					l.setNome(rs.getString("nome"));
+					l.setEndereco(rs.getString("endereço"));
 					al.add(l);
 				}
 			} catch (SQLException e) {
@@ -186,6 +190,8 @@ public class LocalDAO {
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
 					l.setLatitude(rs.getDouble("latitude"));
+					l.setNome(rs.getString("nome"));
+					l.setEndereco(rs.getString("endereço"));
 					al.add(l);
 				}
 			} catch (SQLException e) {

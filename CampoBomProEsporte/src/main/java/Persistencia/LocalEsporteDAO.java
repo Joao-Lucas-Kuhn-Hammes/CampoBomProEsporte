@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import Models.Esporte;
 import Models.Local;
+import Models.LocalEsporte;
+
 import com.mysql.jdbc.PreparedStatement;
 
 
@@ -19,13 +21,13 @@ public class LocalEsporteDAO {
 			this.conexao = new ConexaoMysql();
 		}
 		// Salvar
-		public boolean salvar(Local local, Esporte esporte) {
+		public boolean salvar(LocalEsporte le) {
 			this.conexao.abrirConexao();
-			String sqlInsert = "INSERT INTO local_esportes VALUES(?,null,?";
+			String sqlInsert = "INSERT INTO local_esportes VALUES(?,null,?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS);
-				statement.setLong(1, local.getId());
-				statement.setLong(2, esporte.getId());
+				statement.setLong(1, le.getLocal().getId());
+				statement.setLong(2, le.getEsporte().getId());
 				statement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -38,13 +40,13 @@ public class LocalEsporteDAO {
 		
 	//	
 	//	
-		public boolean excluir(Local local, Esporte esporte) {
+		public boolean excluir(LocalEsporte le) {
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM local_esportes WHERE id_esportes=? AND id_local=?)";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setLong(2, local.getId());
-				statement.setLong(1, esporte.getId());
+				statement.setLong(2, le.getLocal().getId());
+				statement.setLong(1, le.getEsporte().getId());
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
 					return true;

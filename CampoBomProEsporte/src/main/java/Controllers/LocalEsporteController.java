@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Models.Esporte;
 import Models.Local;
+import Models.LocalEsporte;
 import Persistencia.LocalEsporteDAO;
 @CrossOrigin
 @RestController
@@ -32,12 +33,12 @@ public class LocalEsporteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Boolean> setLocalEsporte(@RequestBody Esporte esporte, Local local) {
-		return ResponseEntity.ok(leDAO.salvar(local, esporte));
+	public ResponseEntity<Boolean> setLocalEsporte(@RequestBody LocalEsporte le) {
+		return ResponseEntity.ok(leDAO.salvar(le));
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<Boolean> excluir(@RequestBody Esporte esporte, Local local) {
-		return ResponseEntity.ok(leDAO.excluir(local, esporte));
+	public ResponseEntity<Boolean> excluir(@RequestBody LocalEsporte le) {
+		return ResponseEntity.ok(leDAO.excluir(le));
 	}
 }
