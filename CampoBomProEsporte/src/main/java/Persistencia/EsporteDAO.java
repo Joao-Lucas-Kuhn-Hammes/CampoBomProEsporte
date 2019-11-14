@@ -73,7 +73,7 @@ public class EsporteDAO {
 				statement.setLong(1, id);
 				int linhasAfetadas = statement.executeUpdate();
 				if(linhasAfetadas>0) {
-					return true;
+					return true;     
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -81,20 +81,7 @@ public class EsporteDAO {
 				this.conexao.fecharConexao();
 			}
 			
-			this.conexao.abrirConexao();
-			sqlExcluir = "DELETE FROM local_esportes WHERE id_esportes=?";
-			try {
-				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setLong(1, id);
-				int linhasAfetadas = statement.executeUpdate();
-				if(linhasAfetadas>0) {
-					return true;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				this.conexao.fecharConexao();
-			}
+			
 			
 			this.conexao.abrirConexao();
 			sqlExcluir = "DELETE FROM esportes WHERE id_esportes=?";

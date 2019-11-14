@@ -78,20 +78,7 @@ public class EquipamentosDAO {
 				this.conexao.fecharConexao();
 			}
 			
-			this.conexao.abrirConexao();
-			sqlExcluir = "DELETE FROM equipamentos_esportes WHERE id_equipamentos=?";
-			try {
-				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
-				statement.setLong(1, id);
-				int linhasAfetadas = statement.executeUpdate();
-				if(linhasAfetadas>0) {
-					return true;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				this.conexao.fecharConexao();
-			}
+			
 			
 			this.conexao.abrirConexao();
 			sqlExcluir = "DELETE FROM equipamentos WHERE id_equipamentos=?";

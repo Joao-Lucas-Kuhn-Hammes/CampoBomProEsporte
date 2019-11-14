@@ -132,7 +132,7 @@ public class LocalDAO {
 					l.setDescricao(rs.getString("descricao"));
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
-					l.setLatitude(rs.getDouble("lagitude"));
+					l.setLatitude(rs.getDouble("latitude"));
 					
 				}
 			} catch (SQLException e) {
@@ -158,7 +158,7 @@ public class LocalDAO {
 					l.setDescricao(rs.getString("descricao"));
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
-					l.setLatitude(rs.getDouble("lagitude"));
+					l.setLatitude(rs.getDouble("latitude"));
 					al.add(l);
 				}
 			} catch (SQLException e) {
@@ -172,7 +172,7 @@ public class LocalDAO {
 		public ArrayList<Local> buscarTodosUsuario(Long id) {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();
-			String sqlBuscarPorId = "SELECT * FROM local id_usuario";
+			String sqlBuscarPorId = "SELECT * FROM local WHERE id_usuario = ?";
 			Local l = null;
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlBuscarPorId);
@@ -185,7 +185,7 @@ public class LocalDAO {
 					l.setDescricao(rs.getString("descricao"));
 					l.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					l.setLongitude(rs.getDouble("longitude"));
-					l.setLatitude(rs.getDouble("lagitude"));
+					l.setLatitude(rs.getDouble("latitude"));
 					al.add(l);
 				}
 			} catch (SQLException e) {
