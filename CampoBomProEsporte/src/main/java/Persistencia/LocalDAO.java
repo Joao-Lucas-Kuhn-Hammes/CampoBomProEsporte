@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Models.Local;
-import Models.Usuario;
 
 import com.mysql.jdbc.PreparedStatement;
 

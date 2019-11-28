@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Models.Esporte;
-import Models.Usuario;
 
 import com.mysql.jdbc.PreparedStatement;
 
