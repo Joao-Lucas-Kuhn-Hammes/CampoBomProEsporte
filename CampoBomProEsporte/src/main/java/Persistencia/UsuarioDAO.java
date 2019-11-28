@@ -8,13 +8,16 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class UsuarioDAO {
 		
+		//atributo
 		private ConexaoMysql conexao;
 		
+		//construtor
 		public UsuarioDAO() {
 			super();
 			this.conexao = new ConexaoMysql();
 		}
-		// Salvar
+		
+		//salva novo usuario no banco
 		public Usuario salvar(Usuario usuario) {
 			this.conexao.abrirConexao();
 			String sqlInsert = "INSERT INTO usuario VALUES(?,?,null,?)";
@@ -38,6 +41,7 @@ public class UsuarioDAO {
 			return usuario;
 		}
 		
+		//editar usuario existente no banco
 		public Usuario editar(Usuario usuario) {
 			this.conexao.abrirConexao();
 			String sqlUpdate = "UPDATE usuario SET nome=?, senha=?, email=? WHERE id_usuario=?";
@@ -56,8 +60,8 @@ public class UsuarioDAO {
 			}
 			return usuario;
 		}
-	//	
-	//	
+
+		//exclui usuario do banco	
 		public boolean excluir(long id) {
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM usuario WHERE id_usuario=?";
@@ -76,6 +80,8 @@ public class UsuarioDAO {
 			return false;
 		
 	}
+		
+		//busca usuario por id
 		public Usuario buscarPorId(long id) {
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM usuario WHERE id_usuario=?";
@@ -101,6 +107,7 @@ public class UsuarioDAO {
 			return usuario;
 		}
 		
+		//login / busca por email e senha
 		public Usuario buscarLogin(String login, String senha) {
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM usuario WHERE email=? and senha=?";
@@ -129,6 +136,7 @@ public class UsuarioDAO {
 			return usuario;
 		}
 		
+		//busca por email
 		public boolean buscarPorEmail(String email) {
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM usuario WHERE email=?";

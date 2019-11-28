@@ -52,4 +52,29 @@ public class Usuario {
 	
 	//metodos
 	
+	
+	//criptografar senha
+	public static String criptografar(String senha) {
+		    	int meio = (int) Math.floor(senha.length()/2);
+		        String senhanova = "";
+		        	for(int i = senha.length();i> 0;i--) {
+		        		int aux =((int)(senha.charAt(i-1)));	
+		        		if((aux >= 97 && aux <=122) ||(aux >=65 && aux<=90)) {
+		        			 aux = aux + 3;
+		        		}
+		        		if((senha.length()%2)== 0) {
+		        			if(i < meio+1) {
+		            			aux = aux - 1;	
+		        			}
+		        		}else {
+		        			if(i < meio+2) {
+		        				aux = aux - 1;	
+		        			}
+		        		}
+		        	senhanova = senhanova + (char) aux;
+		    }
+		        return senhanova;
+		   
+	}
+	
 }

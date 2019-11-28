@@ -21,23 +21,28 @@ import Persistencia.EquipamentosLocalDAO;
 
 public class EquipamentosLocalController {
 	
+	//instancia o DAO
 	EquipamentosLocalDAO  elDAO = new EquipamentosLocalDAO();
 	
+	//busca todos locais com aquele equipamento
 	@GetMapping("local")
 	public ArrayList<Local> getLocal(@RequestBody Equipamento equip) {
 		return elDAO.buscarPorEquipamento(equip);
 	}
 	
+	//busca todos equipamentos daquele local
 	@GetMapping("equipamento")
 	public ArrayList<Equipamento> getEquipamento(@RequestBody Local local) {
 		return elDAO.buscarPorLocal(local);
 	}
 	
+	//registra que naquele local tem esse equipamento
 	@PostMapping
 	public ResponseEntity<Boolean> setEquipamentoslocal(@RequestBody EquipamentosLocal el) {
 		return ResponseEntity.ok(elDAO.salvar(el));
 	}
 	
+	//registra que nesso local não tem esse equipamento
 	@DeleteMapping
 	public ResponseEntity<Boolean> excluir(@RequestBody EquipamentosLocal el) {
 		return ResponseEntity.ok(elDAO.excluir(el));

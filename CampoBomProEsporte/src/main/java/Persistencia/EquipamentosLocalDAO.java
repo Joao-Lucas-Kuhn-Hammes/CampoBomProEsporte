@@ -12,15 +12,18 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class EquipamentosLocalDAO {
 		
+		//atributos
 		private ConexaoMysql conexao;
 		private EquipamentosDAO equipDAO = new EquipamentosDAO();
 		private LocalDAO localDAO = new LocalDAO();
 		
+		//construtores
 		public EquipamentosLocalDAO() {
 			super();
 			this.conexao = new ConexaoMysql();
 		}
-		// Salvar
+		
+		//salvar relacionamento no banco
 		public boolean salvar(EquipamentosLocal el) {
 			this.conexao.abrirConexao();
 			String sqlInsert = "INSERT INTO equipamentos_local VALUES(?,?,null)";
@@ -38,8 +41,7 @@ public class EquipamentosLocalDAO {
 			return true;
 		}
 		
-	//	s
-	//	
+		//exclui relacionamento no banco
 		public boolean excluir(EquipamentosLocal el) {
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM equipamentos_local WHERE id_local=? AND id_equipamentos= ?";
@@ -59,6 +61,7 @@ public class EquipamentosLocalDAO {
 			return false;
 		
 	}
+		//busca todos os locais com um equipamento
 		public ArrayList<Local> buscarPorEquipamento(Equipamento equip) {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();
@@ -79,6 +82,7 @@ public class EquipamentosLocalDAO {
 			return al;
 		}
 		
+		//busca todos os esquipamentos em um local
 		public ArrayList<Equipamento> buscarPorLocal(Local local) {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();

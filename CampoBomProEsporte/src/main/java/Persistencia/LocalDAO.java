@@ -10,15 +10,17 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class LocalDAO {
 		
+		//atributos
 		private ConexaoMysql conexao;
 		private UsuarioDAO usuDAO = new UsuarioDAO();
 		
-		
+		//construtor
 		public LocalDAO() {
 			super();
 			this.conexao = new ConexaoMysql();
 		}
-		// Salvar
+		
+		//salva no banco novo local
 		public Local salvar(Local l) {
 			this.conexao.abrirConexao();
 			String sqlInsert = "INSERT INTO local VALUES(?,?,null,?,?,?,?)";
@@ -45,6 +47,7 @@ public class LocalDAO {
 			return l;
 		}
 		
+		//editar local existente no banco
 		public Local editar(Local l) {
 			this.conexao.abrirConexao();
 			String sqlUpdate = "UPDATE local SET latitude=?,descricao=?, longitude=?, id_usuario=?, endereço=?,nome=? WHERE id_local=?";
@@ -66,10 +69,11 @@ public class LocalDAO {
 			}
 			return l;
 		}
-	//	
-	//	
+
+		//exclui um local do banco
 		public boolean excluir(long id) {
 			
+			//primeiro exclui relacionamentos com equipamentos
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM equipamentos_local WHERE id_local=?";
 			try {
@@ -85,6 +89,7 @@ public class LocalDAO {
 				this.conexao.fecharConexao();
 			}
 			
+			//depois exclui relacionamentos com esporte
 			this.conexao.abrirConexao();
 			sqlExcluir = "DELETE FROM local_esportes WHERE id_local=?";
 			try {
@@ -100,6 +105,7 @@ public class LocalDAO {
 				this.conexao.fecharConexao();
 			}
 			
+			//finamento exclui o local
 			this.conexao.abrirConexao();
 			sqlExcluir = "DELETE FROM local WHERE id_local=?";
 			try {
@@ -117,6 +123,7 @@ public class LocalDAO {
 			return false;
 		
 	}
+		//busca no banco por id
 		public Local buscarPorId(long id) {
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM local WHERE id_local=?";
@@ -144,6 +151,8 @@ public class LocalDAO {
 			}		
 			return l;
 		}
+		
+		//busca todos os locais no banco
 		public ArrayList<Local> buscarTodos() {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();
@@ -173,6 +182,7 @@ public class LocalDAO {
 			return al;
 		}
 		
+		//busca todos os locais criados por um usuario
 		public ArrayList<Local> buscarTodosUsuario(Long id) {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();

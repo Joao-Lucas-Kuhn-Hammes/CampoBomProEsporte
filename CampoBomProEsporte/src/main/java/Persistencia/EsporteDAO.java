@@ -10,16 +10,18 @@ import Models.Usuario;
 import com.mysql.jdbc.PreparedStatement;
 
 public class EsporteDAO {
-		 
+		
+		//atributos
 		private ConexaoMysql conexao;
 		private UsuarioDAO usuDAO = new UsuarioDAO();
 		
-		
+		//construtores
 		public EsporteDAO() {
 			super();
 			this.conexao = new ConexaoMysql();
 		}
-		// Salvar
+		
+		//salvar no banco novo esporte
 		public Esporte salvar(Esporte es) {
 			this.conexao.abrirConexao();
 			String sqlInsert = "INSERT INTO esportes VALUES(null,?,?,?,?)";
@@ -43,6 +45,7 @@ public class EsporteDAO {
 			return es;
 		}
 		
+		//edita no banco um esporte existente
 		public Esporte editar(Esporte es) {
 			this.conexao.abrirConexao();
 			String sqlUpdate = "UPDATE esportes SET descricao=?, id_usuario=?, id_pin=?, nome=? WHERE id_esportes=?";
@@ -62,12 +65,29 @@ public class EsporteDAO {
 			}
 			return es;
 		}
-	//	
-	//	
+		
+		//exclui esporte no banco
 		public boolean excluir(long id) {
 			
+			//deleta seus relacionamentos
 			this.conexao.abrirConexao();
-			String sqlExcluir = "DELETE FROM esportes WHERE id_esportes=?";
+			String sqlExcluir = "DELETE FROM local_esporte WHERE id_esporte=?";
+			try {
+				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
+				statement.setLong(1, id);
+				int linhasAfetadas = statement.executeUpdate();
+				if(linhasAfetadas>0) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				this.conexao.fecharConexao();
+			}
+			
+			//agora exclui no banco
+			this.conexao.abrirConexao();
+			sqlExcluir = "DELETE FROM esportes WHERE id_esportes=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
 				statement.setLong(1, id);
@@ -83,6 +103,8 @@ public class EsporteDAO {
 			return false;
 		
 	}
+		
+		//busca esporte no banco por id
 		public Esporte buscarPorId(long id) {
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM esportes WHERE id_esportes=?";
@@ -109,6 +131,7 @@ public class EsporteDAO {
 			return es;
 		}
 		
+		//busca todos
 		public ArrayList<Esporte> buscarTodos() {
 			this.conexao.abrirConexao();
 			ArrayList<Esporte> al = new ArrayList<>();
@@ -134,6 +157,7 @@ public class EsporteDAO {
 			return al;
 		}
 		
+		//busca todos esporte criados com um usuario
 		public ArrayList<Esporte> buscarTodosUsuario(Long id) {
 			this.conexao.abrirConexao();
 			ArrayList<Esporte> al = new ArrayList<>();

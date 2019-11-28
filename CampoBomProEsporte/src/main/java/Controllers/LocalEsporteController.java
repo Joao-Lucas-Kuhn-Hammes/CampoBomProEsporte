@@ -20,23 +20,28 @@ import Persistencia.LocalEsporteDAO;
 
 public class LocalEsporteController {
 	
+	//instancia DAO
 	LocalEsporteDAO  leDAO = new LocalEsporteDAO();
 	
+	//busca todos esportes daquele local
 	@GetMapping("esporte")
 	public ArrayList<Esporte> getEsporte(@RequestBody Local local) {
 		return leDAO.buscarPorLocal(local);
 	}
 	
+	//busca todos locais com aquele esporte
 	@GetMapping("local")
 	public ArrayList<Local> getLocal(@RequestBody Esporte esporte) {
 		return leDAO.buscarPorEsporte(esporte);
 	}
 	
+	//registra que nesse local ha esse esporte
 	@PostMapping
 	public ResponseEntity<Boolean> setLocalEsporte(@RequestBody LocalEsporte le) {
 		return ResponseEntity.ok(leDAO.salvar(le));
 	}
 	
+	//registra que não ha nesse local esse esporte
 	@DeleteMapping
 	public ResponseEntity<Boolean> excluir(@RequestBody LocalEsporte le) {
 		return ResponseEntity.ok(leDAO.excluir(le));

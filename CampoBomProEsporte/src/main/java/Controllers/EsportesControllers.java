@@ -21,33 +21,40 @@ import Persistencia.EsporteDAO;
 
 public class EsportesControllers {
 	
+	//instancia DAO
 	EsporteDAO esporteDAO = new EsporteDAO();
 	
+	//busca por id
 	@GetMapping("{id}")
 	public Esporte getEsporte(@PathVariable(name = "id") Long id) {
 		return	 esporteDAO.buscarPorId(id);
 	}
 	
+	//busca todos
 	@GetMapping()
 	public ArrayList<Esporte> getEsporteTodos() {
 		return esporteDAO.buscarTodos();
 	}
 	
+	//busca todos esportes daquele usuario
 	@GetMapping("usuario/{id}")
 	public ArrayList<Esporte> getEsporteTodosUsuario(@PathVariable(name = "id") Long id) {
 		return esporteDAO.buscarTodosUsuario(id);
 	}
 	
+	//cria um novo esporte
 	@PostMapping
 	public ResponseEntity<Esporte> setEsporte(@RequestBody Esporte novo) {
 		return ResponseEntity.ok(esporteDAO.salvar(novo));
 	}
 	
+	//edita esporte
 	@PutMapping()
 	public ResponseEntity<Esporte> atualizar(@RequestBody Esporte novo) {
 		return ResponseEntity.ok(esporteDAO.editar(novo));
 	}
 	
+	//deleta esporte
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Boolean> deletar(@PathVariable Long id) {
 		return ResponseEntity.ok(esporteDAO.excluir(id));

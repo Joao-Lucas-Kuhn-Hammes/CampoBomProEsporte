@@ -12,15 +12,18 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class LocalEsporteDAO {
 		
+		//atributos
 		private ConexaoMysql conexao;
 		private LocalDAO localDAO = new LocalDAO();
 		private EsporteDAO esporteDAO = new EsporteDAO();
 		
+		//construtor
 		public LocalEsporteDAO() {
 			super();
 			this.conexao = new ConexaoMysql();
 		}
-		// Salvar
+		
+		//cria um relacionamento entre esporte e local
 		public boolean salvar(LocalEsporte le) {
 			this.conexao.abrirConexao();
 			String sqlInsert = "INSERT INTO local_esportes VALUES(?,null,?)";
@@ -38,8 +41,7 @@ public class LocalEsporteDAO {
 			return true;
 		}
 		
-	//	
-	//	
+		//exclui relacionamento
 		public boolean excluir(LocalEsporte le) {
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM local_esportes WHERE id_esportes=? AND id_local=?)";
@@ -59,6 +61,8 @@ public class LocalEsporteDAO {
 			return false;
 		
 	}
+		
+		//busca no banco todos esportes de um local
 		public ArrayList<Esporte> buscarPorLocal(Local local) {
 			ArrayList<Esporte> al = new ArrayList<>();
 			this.conexao.abrirConexao();
@@ -79,6 +83,7 @@ public class LocalEsporteDAO {
 			return al;
 		}
 		
+		//busca todos os locais com aquele esporte
 		public ArrayList<Local> buscarPorEsporte(Esporte esporte) {
 			ArrayList<Local> al = new ArrayList<>();
 			this.conexao.abrirConexao();

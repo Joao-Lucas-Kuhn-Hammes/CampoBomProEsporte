@@ -2,8 +2,13 @@ package Models;
 
 public class EquipamentosLocal {
 	
+	//atributos
+	
 	private Local local;
 	private Equipamento equipamento;
+	
+	//getters n setters
+	
 	public Local getLocal() {
 		return local;
 	}
@@ -16,6 +21,9 @@ public class EquipamentosLocal {
 	public void setEquipamento(Equipamento equipamento) {
 		this.equipamento = equipamento;
 	}
+	
+	//construtores
+	
 	public EquipamentosLocal(Local local, Equipamento equipamento) {
 		super();
 		this.local = local;

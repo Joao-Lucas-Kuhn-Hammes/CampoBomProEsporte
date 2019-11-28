@@ -21,33 +21,40 @@ import Persistencia.LocalDAO;
 
 public class LocalControllers {
 	
+	//instancia DAO
 	LocalDAO localDAO = new LocalDAO();
 	
+	//busca por id
 	@GetMapping("{id}")
 	public Local getLocal(@PathVariable(name = "id") Long id) {
 		return localDAO.buscarPorId(id);
 	}
 	
+	//busca todos
 	@GetMapping()
 	public ArrayList<Local> getLocalTodos() {
 		return localDAO.buscarTodos();
 	}
 	
+	//busca todos locais criados pelo usuario
 	@GetMapping("usuario/{id}")
 	public ArrayList<Local> getLocalTodosUsuario(@PathVariable(name = "id") Long id) {
 		return localDAO.buscarTodosUsuario(id);
 	}
 	
+	//cria novo local
 	@PostMapping
 	public ResponseEntity<Local> setEsporte(@RequestBody Local novo) {
 		return ResponseEntity.ok(localDAO.salvar(novo));
 	}
 	
+	//edita local
 	@PutMapping()
 	public ResponseEntity<Local> atualizar(@RequestBody Local novo) {
 		return ResponseEntity.ok(localDAO.editar(novo));
 	}
 	
+	//deleta local
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Boolean> deletar(@PathVariable Long id) {
 		return ResponseEntity.ok(localDAO.excluir(id));

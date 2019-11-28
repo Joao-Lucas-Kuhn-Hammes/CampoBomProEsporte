@@ -10,15 +10,17 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class EquipamentosDAO {
 		 
+		//atributos
 		private ConexaoMysql conexao;
 		private UsuarioDAO usuDAO = new UsuarioDAO();
 		
-		
+		//construtor
 		public EquipamentosDAO() {
 			super();
 			this.conexao = new ConexaoMysql();
 		}
-		// Salvar
+		
+		//salvar novo equipamento no banco
 		public Equipamento salvar(Equipamento eq) {
 			this.conexao.abrirConexao();
 			String sqlInsert = "INSERT INTO equipamentos VALUES(null,?,?,?)";
@@ -41,6 +43,7 @@ public class EquipamentosDAO {
 			return eq;
 		}
 		
+		//editar equipamento existente no banco
 		public Equipamento editar(Equipamento eq) {
 			this.conexao.abrirConexao();
 			String sqlUpdate = "UPDATE equipamentos SET nome=?,descricao=?, id_usuario=? WHERE id_equipamentos=?";
@@ -59,10 +62,11 @@ public class EquipamentosDAO {
 			}
 			return eq;
 		}
-	//	
-	//	
+		
+		//exclui equipamento no banco
 		public boolean excluir(Long id) {
 			
+			//deleta seus relacionamentos
 			this.conexao.abrirConexao();
 			String sqlExcluir = "DELETE FROM equipamentos_local WHERE id_equipamentos=?";
 			try {
@@ -79,7 +83,7 @@ public class EquipamentosDAO {
 			}
 			
 			
-			
+			//agora exclui do banco
 			this.conexao.abrirConexao();
 			sqlExcluir = "DELETE FROM equipamentos WHERE id_equipamentos=?";
 			try {
@@ -97,6 +101,8 @@ public class EquipamentosDAO {
 			return false;
 		
 	}
+		
+		//busca no banco equipamento com aquele id
 		public Equipamento buscarPorId(long id) {
 			this.conexao.abrirConexao();
 			String sqlBuscarPorId = "SELECT * FROM equipamentos WHERE id_equipamentos=?";
@@ -121,6 +127,8 @@ public class EquipamentosDAO {
 			}		
 			return eq;
 		}
+		
+		//buscar todos equipamento criados por um usuario
 		public ArrayList<Equipamento> buscarTodosUsuario(Long id) {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();
@@ -147,6 +155,7 @@ public class EquipamentosDAO {
 			return al;
 		}
 		
+		//busca todos equipamentos
 		public ArrayList<Equipamento> buscarTodos() {
 			ArrayList<Equipamento> al = new ArrayList<>();
 			this.conexao.abrirConexao();

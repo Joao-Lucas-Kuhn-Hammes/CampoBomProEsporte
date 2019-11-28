@@ -21,26 +21,32 @@ import Persistencia.UsuarioDAO;
 	@RestController
 	@RequestMapping("/usuario/")
 	public class UsuarioController {
-		
+	
+	//instancia o DAO
 	UsuarioDAO usuDAO = new UsuarioDAO();
 		
+	//busca por id
 	@GetMapping("{id}")
 	public Usuario getUsuario(@PathVariable(name = "id") Long id) {
 		return usuDAO.buscarPorId(id);
 	}
 	
+	//busca por email
 	@GetMapping("email/{email}")
 	public boolean getEmail(@PathVariable(name = "email") String email) {
 		return usuDAO.buscarPorEmail(email);
 	}
 		
+	//login / busca por email e senha
 	@GetMapping("{email}/{senha}")
 	public Usuario login(@PathVariable(name = "email") String email, @PathVariable(name = "senha") String senha) {
-		return usuDAO.buscarLogin(email, senha);
+		return usuDAO.buscarLogin(email, Usuario.criptografar(senha));
 	}
 	
+	//cria novo usuario
 	@PostMapping
 	public ResponseEntity<Usuario> setUsuario(@RequestBody Usuario novo) {
+		novo.setSenha(Usuario.criptografar(novo.getSenha()));
 		if(!usuDAO.buscarPorEmail(novo.getEmail())) {
 			return ResponseEntity.ok(usuDAO.salvar(novo));
 		}else {
@@ -50,11 +56,14 @@ import Persistencia.UsuarioDAO;
 		
 	}
 	
+	//edita usuario
 	@PutMapping()
 	public ResponseEntity<Usuario> atualizar(@RequestBody Usuario novo) {
+		novo.setSenha(Usuario.criptografar(novo.getSenha()));
 		return ResponseEntity.ok(usuDAO.editar(novo));
 	}
 	
+	//exclui usuario
 	@DeleteMapping("{id}")
 	public ResponseEntity<Boolean> deletar(@PathVariable Long id) {
 		return ResponseEntity.ok(usuDAO.excluir(id));
