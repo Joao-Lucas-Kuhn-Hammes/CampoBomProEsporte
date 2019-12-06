@@ -70,7 +70,7 @@ public class EsporteDAO {
 			
 			//deleta seus relacionamentos
 			this.conexao.abrirConexao();
-			String sqlExcluir = "DELETE FROM local_esporte WHERE id_esporte=?";
+			String sqlExcluir = "DELETE FROM local_esportes WHERE id_esporte=?";
 			try {
 				PreparedStatement statement = (PreparedStatement) this.conexao.getConexao().prepareStatement(sqlExcluir);
 				statement.setLong(1, id);
@@ -146,6 +146,7 @@ public class EsporteDAO {
 					es.setDescricao(rs.getString("descricao"));
 					es.setUsuario(usuDAO.buscarPorId(rs.getLong("id_usuario")));
 					es.setPin(rs.getLong("id_pin"));
+					es.setNome(rs.getString("nome"));
 					al.add(es);
 				}
 			} catch (SQLException e) {
